@@ -1,9 +1,8 @@
 calpha
 ======
 
-calpha is an implementation of Minecraft Alpha 1.1.2_01 client in C.
-
-It uses software rendering and outputs to terminal / text using ASCII.
+calpha is an implementation of Minecraft Alpha 1.1.2_01 client in C using
+opengl 1.1
 
 Building
 ========
