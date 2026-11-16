@@ -1,0 +1,12 @@
+calpha
+======
+
+calpha is an implementation of Minecraft Alpha 1.1.2_01 client in C.
+
+It uses software rendering and outputs to terminal / text using ASCII.
+
+Building
+========
+
+calpha uses tcc, which is so fast that benefits from incremental compilation
+are negligible. Thus, a simple make.sh is used. The output is in ./bin/calpha.
