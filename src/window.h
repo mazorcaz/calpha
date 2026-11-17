@@ -11,7 +11,7 @@ struct window {
 	Window win;
 	GLXContext glc;
 
-	int closed;  // freed
+	int closed;
 
 	int mousex;
 	int mousey;
@@ -21,6 +21,7 @@ struct window {
 int window_init(struct window *window);
 void window_free(struct window *window);
 
+void window_close(struct window *window);
 void window_before_draw(struct window *window);
 void window_after_draw(struct window *window);
 void window_handle_events(struct window *window);

@@ -24,5 +24,7 @@ int main()
 		usleep(16000);
 	}
 
+	window_free(&w);
+
 	return 0;
 }

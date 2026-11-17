@@ -49,7 +49,10 @@ void window_free(struct window *window)
 	glXDestroyContext(window->display, window->glc);
 	XDestroyWindow(window->display, window->win);
 	XCloseDisplay(window->display);
+}
 
+void window_close(struct window *window)
+{
 	window->closed = 1;
 }
 
@@ -69,7 +72,7 @@ void window_handle_events(struct window *window)
 	while (XPending(window->display) > 0) {
 		XNextEvent(window->display, &xevent);
 		if (xevent.type == KeyPress) {
-			window_free(window);
+			window_close(window);
 			return;
 		}
 	}
