@@ -9,12 +9,15 @@
 int main()
 {
 	struct window w;
-	if (window_init(&w)) return 1;
+	if (window_init(&w, 800, 600)) return 1;
 
 	struct event event;
 	while (!w.closed) {
 		while (window_next_event(&w, &event)) {
-			if (event.type == EVENT_MOUSE_DOWN && event.button == 2) {
+			if (event.type == EVENT_WINDOW_RESIZE) {
+				printf("resize %dx%d\n", w.width, w.height);
+				glViewport(0, 0, w.width, w.height);
+			} else if (event.type == EVENT_MOUSE_DOWN && event.button == 2) {
 				window_close(&w);
 			}
 		}

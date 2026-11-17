@@ -7,9 +7,11 @@
 
 #include "window.h"
 
-int window_init(struct window *window)
+int window_init(struct window *window, int width, int height)
 {
 	window->closed = 0;
+	window->width = width;
+	window->height = height;
 
 	window->display = XOpenDisplay(NULL);
 	if (!window->display) {
@@ -26,9 +28,9 @@ int window_init(struct window *window)
 	XSetWindowAttributes swa;
 	swa.colormap = cmap;
 	swa.event_mask = ExposureMask | KeyPressMask | KeyReleaseMask | PointerMotionMask
-		| ButtonPressMask | ButtonReleaseMask;
+		| ButtonPressMask | ButtonReleaseMask | StructureNotifyMask;
 
-	window->win = XCreateWindow(window->display, root, 0, 0, 800, 600, 0, vi->depth,
+	window->win = XCreateWindow(window->display, root, 0, 0, width, height, 0, vi->depth,
 		InputOutput, vi->visual, CWColormap | CWEventMask, &swa);
 
 	XMapWindow(window->display, window->win);
@@ -104,6 +106,18 @@ int window_next_event(struct window *window, struct event *event)
 			event->x = xevent.xbutton.x;
 			event->y = xevent.xbutton.y;
 			return 1;
+		case ConfigureNotify:
+			if (xevent.xconfigure.width != window->width ||
+			    xevent.xconfigure.height != window->height)
+			{
+				event->type = EVENT_WINDOW_RESIZE;
+				event->width = xevent.xconfigure.width;
+				event->height = xevent.xconfigure.height;
+				window->width = xevent.xconfigure.width;
+				window->height = xevent.xconfigure.height;
+				return 1;
+			}
+			break;
 		case ClientMessage:
 			window_close(window);
 			return 0;

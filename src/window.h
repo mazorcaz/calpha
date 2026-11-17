@@ -13,7 +13,8 @@ enum event_type {
 	EVENT_KEY_UP,
 	EVENT_MOUSE_MOVE,
 	EVENT_MOUSE_DOWN,
-	EVENT_MOUSE_UP
+	EVENT_MOUSE_UP,
+	EVENT_WINDOW_RESIZE
 };
 
 struct event {
@@ -22,6 +23,7 @@ struct event {
 	int button; // 0 = left, 1 = middle, 2 = right
 	int keycode;
 	int keysym; // key_code translated to char
+	int width, height; // for window events
 };
 
 struct window {
@@ -31,14 +33,15 @@ struct window {
 
 	int closed;
 
-	int mousex;
-	int mousey;
+	int mousex, mousey;
 
 	uint8_t keys[256];
+
+	int width, height;
 };
 
 // 0 on success
-int window_init(struct window *window);
+int window_init(struct window *window, int width, int height);
 void window_free(struct window *window);
 
 void window_close(struct window *window);
