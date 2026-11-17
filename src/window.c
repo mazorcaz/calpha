@@ -25,7 +25,8 @@ int window_init(struct window *window)
 	Colormap cmap = XCreateColormap(window->display, root, vi->visual, AllocNone);
 	XSetWindowAttributes swa;
 	swa.colormap = cmap;
-	swa.event_mask = ExposureMask | KeyPressMask;
+	swa.event_mask = ExposureMask | KeyPressMask | KeyReleaseMask | PointerMotionMask
+		| ButtonPressMask | ButtonReleaseMask;
 
 	window->win = XCreateWindow(window->display, root, 0, 0, 800, 600, 0, vi->depth,
 		InputOutput, vi->visual, CWColormap | CWEventMask, &swa);
@@ -66,15 +67,48 @@ void window_after_draw(struct window *window)
 	glXSwapBuffers(window->display, window->win);
 }
 
-void window_handle_events(struct window *window)
+int window_next_event(struct window *window, struct event *event)
 {
 	XEvent xevent;
 	while (XPending(window->display) > 0) {
 		XNextEvent(window->display, &xevent);
-		if (xevent.type == KeyPress) {
+		switch (xevent.type) {
+		case KeyPress:
+			event->type = EVENT_KEY_DOWN;
+			event->keycode = xevent.xkey.keycode;
+			event->keysym = XLookupKeysym(&xevent.xkey, 0);
+			window->keys[xevent.xkey.keycode] = 1;
+			return 1;
+		case KeyRelease:
+			event->type = EVENT_KEY_UP;
+			event->keycode = xevent.xkey.keycode;
+			event->keysym = XLookupKeysym(&xevent.xkey, 0);
+			window->keys[xevent.xkey.keycode] = 0;
+			return 1;
+		case MotionNotify:
+			event->type = EVENT_MOUSE_MOVE;
+			event->dx = xevent.xmotion.x - window->mousex;
+			event->dy = xevent.xmotion.y - window->mousey;
+			window->mousex = event->x = xevent.xmotion.x;
+			window->mousey = event->y = xevent.xmotion.y;
+			return 1;
+		case ButtonPress:
+			event->type = EVENT_MOUSE_DOWN;
+			event->button = xevent.xbutton.button - 1;
+			event->x = xevent.xbutton.x;
+			event->y = xevent.xbutton.y;
+			return 1;
+		case ButtonRelease:
+			event->type = EVENT_MOUSE_UP;
+			event->button = xevent.xbutton.button - 1;
+			event->x = xevent.xbutton.x;
+			event->y = xevent.xbutton.y;
+			return 1;
+		case ClientMessage:
 			window_close(window);
-			return;
+			return 0;
 		}
 	}
+	return 0;
 }
 
