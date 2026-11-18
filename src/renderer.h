@@ -5,6 +5,8 @@
 
 #include <stdint.h>
 
+#include "mesh.h"
+
 struct window;
 
 #define RENDERER_BUFFER_SZ (256*128*64)
@@ -12,7 +14,7 @@ struct window;
 struct renderer {
 	struct window *window;
 
-	uint8_t *buffer; // big buffer
+	struct mesh mesh;
 };
 
 int renderer_init(struct renderer *renderer, struct window *window);
