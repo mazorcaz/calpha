@@ -19,6 +19,6 @@ struct chunk {
 };
 
 int chunk_render(struct chunk *chunk, struct world *world, struct renderer *renderer);
-int chunk_mesh(struct chunk *chunk struct world *world, struct renderer *renderer);
+int chunk_mesh(struct chunk *chunk, struct world *world, struct renderer *renderer);
 
 #endif

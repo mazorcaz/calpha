@@ -42,7 +42,7 @@ int dbuf_addbyte(struct dbuf *buf, uint8_t v)
 	return 0;
 }
 
-int dbuf_addbuf(struct dbuf *buf, uint8_t *src, size_t sz)
+int dbuf_addbuf(struct dbuf *buf, const uint8_t *src, size_t sz)
 {
 	if (buf->len + sz > buf->sz) {
 		do {
