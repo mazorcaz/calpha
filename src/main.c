@@ -40,6 +40,8 @@ int main()
 
 	}
 
+	chunk_free(&chunk);
+	renderer_free(&renderer);
 	window_free(&w);
 
 	return 0;
