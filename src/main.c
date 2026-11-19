@@ -5,11 +5,16 @@
 #include <unistd.h>
 
 #include "window.h"
+#include "renderer.h"
+#include "nibblearr.h"
 
 int main()
 {
 	struct window w;
 	if (window_init(&w, 800, 600)) return 1;
+
+	struct renderer renderer;
+	if (renderer_init(&renderer));
 
 	struct event event;
 	while (!w.closed) {
@@ -22,25 +27,8 @@ int main()
 			}
 		}
 
-		window_before_draw(&w);
+		renderer_render(&renderer, &w, NULL);
 
-		glClearColor(0.0f, 0.1f, 0.15f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		glBegin(GL_TRIANGLES);
-			glColor3f(1.0f, 0.0f, 0.0f);
-			glVertex2f(-0.5f, -0.5f);
-
-			glColor3f(0.0f, 1.0f, 0.0f);
-			glVertex2f(0.5f, -0.5f);
-
-			glColor3f(0.0f, 0.0f, 1.0f);
-			glVertex2f(0.0f, 0.5f);
-		glEnd();
-
-		window_after_draw(&w);
-
-		usleep(16000);
 	}
 
 	window_free(&w);

@@ -8,18 +8,17 @@
 #include "mesh.h"
 
 struct window;
+struct world;
 
 #define RENDERER_BUFFER_SZ (256*128*64)
 
 struct renderer {
-	struct window *window;
-
 	struct mesh mesh;
 };
 
-int renderer_init(struct renderer *renderer, struct window *window);
+int renderer_init(struct renderer *renderer);
 void renderer_free(struct renderer *renderer);
 
-int renderer_render(struct renderer *renderer);
+int renderer_render(struct renderer *renderer, struct window *window, struct world *world);
 
 #endif
