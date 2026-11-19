@@ -30,7 +30,13 @@ int main()
 			}
 		}
 
+		window_before_draw(&w);
+
 		renderer_render(&renderer, &w, NULL);
+
+		chunk_render(&chunk, &renderer, NULL, NULL, NULL, NULL);
+
+		window_after_draw(&w);
 
 	}
 
