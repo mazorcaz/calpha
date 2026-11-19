@@ -8,7 +8,7 @@
 
 int renderer_init(struct renderer *renderer)
 {
-	if (!mesh_init(&renderer->mesh)) return 1;
+	if (mesh_init(&renderer->mesh)) return 1;
 
 	return 0;
 }

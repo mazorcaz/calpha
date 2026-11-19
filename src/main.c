@@ -6,7 +6,7 @@
 
 #include "window.h"
 #include "renderer.h"
-#include "nibblearr.h"
+#include "chunk.h"
 
 int main()
 {
@@ -14,7 +14,10 @@ int main()
 	if (window_init(&w, 800, 600)) return 1;
 
 	struct renderer renderer;
-	if (renderer_init(&renderer));
+	if (renderer_init(&renderer)) return 1;
+
+	struct chunk chunk;
+	if (chunk_init(&chunk, 0, 0)) return 1;
 
 	struct event event;
 	while (!w.closed) {

@@ -22,6 +22,7 @@ struct chunk {
 };
 
 int chunk_init(struct chunk *chunk, int32_t x, int32_t z);
+void chunk_free(struct chunk *chunk);
 
 uint16_t chunk_getblock(struct chunk *chunk, int x, int y, int z);
 void chunk_setblock(struct chunk *chunk, int x, int y, int z, uint16_t v);

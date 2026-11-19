@@ -17,6 +17,7 @@ void mesh_free(struct mesh *mesh)
 void mesh_reset(struct mesh *mesh)
 {
 	mesh->count = 0;
+	mesh->buffer.len = 0;
 }
 
 int mesh_push(struct mesh *mesh, float x, float y, float z, float u, float v)
