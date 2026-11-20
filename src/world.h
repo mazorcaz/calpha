@@ -3,10 +3,20 @@
 #ifndef CALPHA_WORLD_H
 #define CALPHA_WORLD_H
 
-struct chunk;
+#include "chunk.h"
+
+struct window;
+struct renderstate;
 
 struct world {
 	struct chunk *chunks[256]; // chunk hash table
+
+	struct chunk chunk; // TEMPORARY
 };
+
+int world_init(struct world *world);
+void world_free(struct world *world);
+
+int world_render(struct world *world, struct window *window, struct renderstate *rs);
 
 #endif

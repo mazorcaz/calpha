@@ -30,19 +30,19 @@ int mesh_push(struct mesh *mesh, float x, float y, float z, float u, float v)
 
 int mesh_cube_front(struct mesh *mesh, float x, float y, float z, float u, float v)
 {
-	if (mesh_push(mesh, x+0.0f, y+0.0f, z+0.0f, u+0/16.0f, v+1/16.0f)) return 1;
-	if (mesh_push(mesh, x+1.0f, y+0.0f, z+0.0f, u+1/16.0f, v+1/16.0f)) return 1;
-	if (mesh_push(mesh, x+1.0f, y+1.0f, z+0.0f, u+1/16.0f, v+0/16.0f)) return 1;
-	if (mesh_push(mesh, x+0.0f, y+1.0f, z+0.0f, u+0/16.0f, v+0/16.0f)) return 1;
+	if (mesh_push(mesh, x+0.0f, y+0.0f, z+1.0f, u+0/16.0f, v+1/16.0f)) return 1;
+	if (mesh_push(mesh, x+1.0f, y+0.0f, z+1.0f, u+1/16.0f, v+1/16.0f)) return 1;
+	if (mesh_push(mesh, x+1.0f, y+1.0f, z+1.0f, u+1/16.0f, v+0/16.0f)) return 1;
+	if (mesh_push(mesh, x+0.0f, y+1.0f, z+1.0f, u+0/16.0f, v+0/16.0f)) return 1;
 	return 0;
 }
 
 int mesh_cube_back(struct mesh *mesh, float x, float y, float z, float u, float v)
 {
-	if (mesh_push(mesh, x+1.0f, y+0.0f, z+1.0f, u+0/16.0f, v+1/16.0f)) return 1;
-	if (mesh_push(mesh, x+0.0f, y+0.0f, z+1.0f, u+1/16.0f, v+1/16.0f)) return 1;
-	if (mesh_push(mesh, x+0.0f, y+1.0f, z+1.0f, u+1/16.0f, v+0/16.0f)) return 1;
-	if (mesh_push(mesh, x+1.0f, y+1.0f, z+1.0f, u+0/16.0f, v+0/16.0f)) return 1;
+	if (mesh_push(mesh, x+1.0f, y+0.0f, z+0.0f, u+0/16.0f, v+1/16.0f)) return 1;
+	if (mesh_push(mesh, x+0.0f, y+0.0f, z+0.0f, u+1/16.0f, v+1/16.0f)) return 1;
+	if (mesh_push(mesh, x+0.0f, y+1.0f, z+0.0f, u+1/16.0f, v+0/16.0f)) return 1;
+	if (mesh_push(mesh, x+1.0f, y+1.0f, z+0.0f, u+0/16.0f, v+0/16.0f)) return 1;
 	return 0;
 }
 
