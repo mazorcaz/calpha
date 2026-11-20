@@ -3,8 +3,10 @@
 #include <stddef.h>
 
 #include "chunk.h"
-#include "world.h"
 #include "window.h"
+#include "mesh.h"
+#include "resources.h"
+#include "world.h"
 
 void set_perspective(int width, int height)
 {
@@ -15,7 +17,7 @@ void set_perspective(int width, int height)
 	glLoadIdentity();
 
 	double near = 0.1;
-	double far = 100.0;
+	double far = 256.0;
 	double top = near * 0.4142;
 	double bottom = -top;
 	double right = top * aspect;
@@ -35,15 +37,22 @@ void world_free(struct world *world)
 	chunk_free(&world->chunk);
 }
 
-int world_render(struct world *world, struct window *window, struct renderstate *rs)
+int world_render(struct world *world, struct window *window, struct mesh *mesh, struct resources *resources)
 {
 	set_perspective(window->width, window->height);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-	glTranslatef(-8.0f, -64.0f, -64.0f);
+	glTranslatef(-8.0f, -120.0f, -64.0f);
 
-	if (chunk_render(&world->chunk, window, rs, NULL, NULL, NULL, NULL)) return 1;
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
+
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, resources->terrain);
+
+	if (chunk_render(&world->chunk, mesh, NULL, NULL, NULL, NULL)) return 1;
+
 	return 0;
 }

@@ -4,8 +4,9 @@
 #include <stdio.h>
 #include <unistd.h>
 
-#include "renderstate.h"
 #include "window.h"
+#include "mesh.h"
+#include "resources.h"
 #include "world.h"
 
 int main()
@@ -13,8 +14,11 @@ int main()
 	struct window window;
 	if (window_init(&window, 800, 600)) return 1;
 
-	struct renderstate rs;
-	if (renderstate_init(&rs)) return 1;
+	struct mesh mesh;
+	if (mesh_init(&mesh)) return 1;
+
+	struct resources resources;
+	if (resources_init(&resources)) return 1;
 
 	struct world world;
 	if (world_init(&world)) return 1;
@@ -34,14 +38,15 @@ int main()
 		glClearColor(0.0f, 0.0f, 0.2f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		world_render(&world, &window, &rs);
+		world_render(&world, &window, &mesh, &resources);
 
 		window_after_draw(&window);
 
 	}
 
 	world_free(&world);
-	renderstate_free(&rs);
+	resources_free(&resources);
+	mesh_free(&mesh);
 	window_free(&window);
 
 	return 0;

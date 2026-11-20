@@ -6,7 +6,7 @@
 #include "chunk.h"
 
 struct window;
-struct renderstate;
+struct mesh;
 
 struct world {
 	struct chunk *chunks[256]; // chunk hash table
@@ -17,6 +17,6 @@ struct world {
 int world_init(struct world *world);
 void world_free(struct world *world);
 
-int world_render(struct world *world, struct window *window, struct renderstate *rs);
+int world_render(struct world *world, struct window *window, struct mesh *mesh, struct resources *resources);
 
 #endif

@@ -6,7 +6,7 @@
 
 #include <stdio.h>
 
-#include "texture.h"
+#include "resources.h"
 
 GLuint load_texture(const char *path)
 {
@@ -26,4 +26,17 @@ GLuint load_texture(const char *path)
 
 	stbi_image_free(data);
 	return tex;
+}
+
+int resources_init(struct resources *resources)
+{
+	resources->terrain = load_texture("resources/terrain.png");
+	if (!resources->terrain) return 1;
+
+	return 0;
+}
+
+void resources_free(struct resources *resources)
+{
+	glDeleteTextures(1, &resources->terrain);
 }

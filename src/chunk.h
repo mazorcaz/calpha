@@ -6,8 +6,7 @@
 #include <stdint.h>
 #include <GL/gl.h>
 
-struct window;
-struct renderstate;
+struct mesh;
 
 struct chunk {
 	int32_t x;
@@ -28,10 +27,10 @@ void chunk_free(struct chunk *chunk);
 uint16_t chunk_getblock(struct chunk *chunk, int x, int y, int z);
 void chunk_setblock(struct chunk *chunk, int x, int y, int z, uint16_t v);
 
-int chunk_render(struct chunk *chunk, struct window *window, struct renderstate *rs,
+int chunk_render(struct chunk *chunk, struct mesh *mesh,
 	struct chunk *front, struct chunk *back, struct chunk *left, struct chunk *right);
 
-int chunk_mesh(struct chunk *chunk, int section, struct window *window, struct renderstate *rs,
+int chunk_mesh(struct chunk *chunk, int section, struct mesh *mesh,
 	struct chunk *front, struct chunk *back, struct chunk *left, struct chunk *right);
 
 #endif
